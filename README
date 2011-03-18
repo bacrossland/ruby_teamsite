@@ -1,0 +1,102 @@
+= Ruby TeamSite
+
+Ruby TeamSite is a gem library for interfacing with Autonomy Interwoven TeamSite 
+that is normal done through TeamSite Perl Modules or TeamSite Command Line Tools.
+You will need a licensed copy of Autonomy Interwoven TeamSite in order to use this gem.
+
+This gem is currently under development. Not all methods availible in the TeamSite Perl Modules
+or TeamSite Command Line Tools have been built in but will be in future releases. If you have any issues
+or questions about this gem please post them to the Issues section of this gem gitHub page: 
+https://github.com/bacrossland/ruby_teamsite
+
+== TeamSite Versions
+
+Ruby TeamSite has been written only for version 6.7.1 SP1 and greater of TeamSite on Linux and Solaris servers. 
+Windows is not supported at this time (manly because I don't have access to a version on Windows).
+
+== Ruby and Ruby on Rails Versions
+
+Ruby TeamSite will work with Ruby 1.8.7 and greater as well as Rails 2.3.* and Rails 3.0.* and greater.
+
+== Installing Ruby TeamSite
+
+To install Ruby TeamSite run the following gem command.
+
+	gem install ruby_teamsite
+
+== Documentation
+
+Documentation in rdoc form will be added to the next and subsequent releases.
+
+== Examples of Use
+
+To use this gem you must require it and then create a new object of either TeamSite, WFworkflow, or WFtask.
+WFworkflow and WFtask require a valid TeamSite job id and task id respectively to work. You can not create a blank
+workflow or task by just calling new (this may change in the future). Unlike the TeamSite Perl Modules there is not need to
+refresh or recreate the workflow or task object after executing a method that modifies them (ex: add_file). The results are
+available immediately. For example, if you add or remove files from a task you can then run the files method and see the result.  
+	
+	require 'ruby_teamsite'
+	
+	ts = RubyTeamSite::TeamSite.new
+		
+	ts.iwhome # Return the location that TeamSite is installed in.
+	ts.version # Return the TeamSite version.
+	ts.lock(file_path,comment,[ownerid]) # Have TeamSite lock a file. Comment is required but sending a blank is acceptable.
+	ts.unlock(file_path) # Have TeamSite unlock a file.
+	ts.file_state(file_path) # Return file state in a hash.
+	
+	wf = RubyTeamSite::WFworkflow.new(job_id)
+	
+	wf.name # Return the name of the workflow.
+	wf.id # Return the id of the workflow.
+	wf.creator # Return the name of the workflow creator.
+	wf.owner # Return the name of the workflow owner.
+	wf.description # Return the description of the workflow.
+	wf.xml # Return the XML output of the workflow.
+	wf.variables # Return a hash of variables for this workflow. The key is the name of the variable and the value is its value.
+	
+	task = RubyTeamSite::WFtask.new(task_id)
+	
+	task.name # Return the name of the task.
+	task.id # Return the id of the task.
+	task.type # Return the type of the task.
+	task.xml # Return the XML output of the task.
+	task.areavpath # Return the areavpath of the task.
+	task.callback # Callback to the workflow system to transition an external or cgi task.
+	task.success([msg]) # Callback with success to the workflow system to transition an external or cgi task to it's success successor. Message for transition is optional.
+	task.failure([msg]) # Callback with failure to the workflow system to transition an external or cgi task to it's failure successor. Message for transition is optional.
+	task.add_file(file_path,comment) # Add a file to the task. Comment is required but sending a blank is acceptable.
+	task.remove_file(file_path) # Remove a file to the task.
+	task.files # Return an array of files attached to this task.
+	
+== Additional Required Libraries
+
+Ruby TeamSite relies on Nokogiri for parsing XML of workflows. If you do not have Nokogiri installed it should install
+when you install Ruby TeamSite. Ruby TeamSite uses Nokogiri 1.4.4 or greater. You can learn more about Nokogiri here:
+http://nokogiri.org/
+
+
+== License
+
+Ruby TeamSite is released under the MIT license. A copy of it is provided in the LICENSE.txt file and below.
+
+Copyright (C) 2011 by Bryan A. Crossland
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
