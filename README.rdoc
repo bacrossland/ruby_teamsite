@@ -12,7 +12,7 @@ https://github.com/bacrossland/ruby_teamsite
 == TeamSite Versions
 
 Ruby TeamSite has been written only for version 6.7.1 SP1 and greater of TeamSite on Linux and Solaris servers. 
-Windows is not supported at this time (manly because I don't have access to a version on Windows).
+Windows is not supported at this time (mainly because I don't have access to a version on Windows).
 
 == Ruby and Ruby on Rails Versions
 
@@ -32,9 +32,9 @@ Documentation in rdoc form will be added to the next and subsequent releases.
 
 To use this gem you must require it and then create a new object of either TeamSite, WFworkflow, or WFtask.
 WFworkflow and WFtask require a valid TeamSite job id and task id respectively to work. You can not create a blank
-workflow or task by just calling new (this may change in the future). Unlike the TeamSite Perl Modules there is not need to
+workflow or task by just calling the "new" method (this may change in the future). Unlike the TeamSite Perl Modules there is no need to
 refresh or recreate the workflow or task object after executing a method that modifies them (ex: add_file). The results are
-available immediately. For example, if you add or remove files from a task you can then run the files method and see the result.  
+available immediately. For example, if you add or remove files from a task you can then run the "files" method and see the result.  
 	
 	require 'ruby_teamsite'
 	
